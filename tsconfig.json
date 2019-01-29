@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "outDir": "./dist/",
+        "sourceMap": true,
+        "noImplicitAny": true,
+        "module": "commonjs",
+        "target": "es6",
+        "jsx": "react",
+        "baseUrl": "src",
+        "paths": {
+            "Services": ["services/"],
+            "Model": ["models/"],
+            "Shared": ["shared/"],
+            "Components": ["components/"]
+        },
+        "lib":["es5", "es6", "dom"]
+    },
+    "include": [
+        "./src/**/*"
+    ]
+}

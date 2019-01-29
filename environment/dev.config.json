@@ -1,0 +1,5 @@
+{
+    "base_url": "http://localhost:3000",
+    "indirection_url":"https://myinsurancebx.herokuapp.com",
+    "indirection_port":3000
+}
