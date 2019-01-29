@@ -31,18 +31,55 @@ const getAccountBalance = randomNumberFactory(1,10000);
 
 let accountsQuantity = 80;
 
-const accounts = [];
+let splitArray = 3;
 
-for(let i=0;i<accountsQuantity;i++){
-    accounts.push( 
-        accountCreator(
-            getAccountType().name,
-            getAccountName(),
-            getAccountBalance()
-        ) 
-    )
+let accountArrays = (new Array(splitArray)).fill(1).map(e=>[]);
+
+let accounts = [];
+
+const completeArray = (arr)=>{
+    return arr.map(a=>{a.balance=getAccountBalance()});
+}
+
+const assignItems = (mainArr, arrays)=>{
+    mainArr.forEach((e,i)=>{
+        arrays[i%splitArray].push(e); 
+    })
+}
+
+let init = 0;
+
+const bootstrap = ()=>{
+    accounts = [];
+    init = 0;
+    for(let i=0;i<accountsQuantity;i++){
+        accounts.push( 
+            accountCreator(
+                getAccountType().name,
+                getAccountName(),
+                null
+            ) 
+        )
+    }
+    assignItems(accounts,accountArrays);
+}
+bootstrap();
+
+const getAccounts = (reset)=>{
+    if(reset){ 
+        bootstrap();
+        console.log(accounts.filter(a=>a.balance).length);
+        return 
+    }
+    if(accountArrays[init]){
+        completeArray(accountArrays[init]);
+        console.log(accounts.filter(a=>a.balance).length);
+    }
+    init++;
+    
+    return accounts;
 }
 
 module.exports = {
-    accounts
+    getAccounts
 };

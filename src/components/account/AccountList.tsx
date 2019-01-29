@@ -31,8 +31,8 @@ export class AccountList extends React.Component<any,AccountListState>{
     }
 
     getAccounts(){
+        let n = 0;
         AccountService.getAccounts().subscribe(accounts=>{
-            console.log(accounts);
             this.setState({accounts});
         },err=>{
             console.log(err);

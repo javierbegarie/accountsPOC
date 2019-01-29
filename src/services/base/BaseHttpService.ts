@@ -1,6 +1,6 @@
 import { BASE_URL } from 'Shared/constants/environment';
 import { Observable } from 'rxjs/internal/Observable';
-import { Observer } from 'rxjs';
+import { Observer, from } from 'rxjs';
 
 export interface HttpInterceptor{
     onResponse(res:Response):void;
@@ -27,7 +27,7 @@ export class BaseHttpService {
         let url = `${BASE_URL}/${endpoint}`;
         if(params){ url.concat( BaseHttpService.toUrlParams(params) );  }
         let req = BaseHttpService.request(url);
-        BaseHttpService.publishToInterceptors(req);
+        //BaseHttpService.publishToInterceptors(req);
         return req;
     }
 
@@ -51,13 +51,11 @@ export class BaseHttpService {
     }
 
     private static request(url:string,options:RequestInit=null):Observable<any>{
-        return Observable.create((observer:Observer<any>)=>{
+        console.log('REQUEST');
+        return from(
             fetch(url,options)
             .then((res:Response)=>res.json())
-            .then((res)=>{
-                observer.next(res);
-            })
-        });
+            );
     }
 
     private static toFetchHeaders(headers:any):Headers{
